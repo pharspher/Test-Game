@@ -10,9 +10,10 @@ import org.ph.game.gamestate.GameStateManager;
 
 public class MainActivity extends SimpleBaseGameActivity {
 
-	private static final int CAMERA_WIDTH = 720;
-	private static final int CAMERA_HEIGHT = 480;
+	private static final int CAMERA_WIDTH = 1280;
+	private static final int CAMERA_HEIGHT = 720;
 
+	private GameContext mContext;
 	private GameStateManager mGameStateManager;
 
 	@Override
@@ -25,12 +26,22 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 	@Override
 	protected void onCreateResources() {
-		mGameStateManager = GameStateManager.getInstance();
+		mContext = new GameContext(this);
+		mGameStateManager = new GameStateManager(mContext);
 	}
 
 	@Override
 	protected Scene onCreateScene() {
-		Scene scene = mGameStateManager.getCurrentScene();
-		return scene;
+		return mGameStateManager.getCurrentScene();
+	}
+
+	@Override
+	public void onResumeGame() {
+		super.onResumeGame();
+	}
+
+	@Override
+	public void onPauseGame() {
+		super.onPauseGame();
 	}
 }
