@@ -14,7 +14,7 @@ import android.util.Log;
 public class MenuGameState extends BaseGameState {
 
 	private static final String TAG = "MenuGameState";
-	private static final String BITMAP_FONT_PATH = "BitmapFont.fnt";
+	private static final String BITMAP_FONT_PATH = "font/BitmapFont.fnt";
 
 	private Scene mScene;
 	private BitmapFont mBitmapFont;
