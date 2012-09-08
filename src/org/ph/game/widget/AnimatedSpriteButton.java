@@ -29,6 +29,12 @@ public abstract class AnimatedSpriteButton extends ButtonSprite {
 		attachChild(text);
 	}
 
+	/**
+	 * To make this onAreaTouched() works, user must call 
+	 * mScene.setTouchAreaBindingOnActionDownEnabled(true), so this button
+	 * can keep receiving ACTION_MOVE & ACTION_UP after user moving finger 
+	 * outside the widget area.
+	 */
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
 			float pTouchAreaLocalX, float pTouchAreaLocalY) {
