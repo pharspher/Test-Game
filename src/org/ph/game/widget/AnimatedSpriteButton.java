@@ -9,10 +9,10 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.HorizontalAlign;
 
-import android.util.Log;
+//import android.util.Log;
 
 public abstract class AnimatedSpriteButton extends ButtonSprite {
-	private static final String TAG = "AnimatedSpriteButton";
+	//private static final String TAG = "AnimatedSpriteButton";
 
 	private boolean mIsPressed = false;
 
@@ -46,16 +46,15 @@ public abstract class AnimatedSpriteButton extends ButtonSprite {
 			setCurrentTileIndex(1);
 			return true;
 		case TouchEvent.ACTION_MOVE:
-			Log.d(TAG, pTouchAreaLocalX + ", " + pTouchAreaLocalY);
+			//Log.d(TAG, pTouchAreaLocalX + ", " + pTouchAreaLocalY);
 			if (pTouchAreaLocalX <= 0 || pTouchAreaLocalX >= getWidth() || 
 			    pTouchAreaLocalY <= 0 || pTouchAreaLocalY >= getHeight()) {
 				mIsPressed = false;
-				Log.d(TAG, "outside");
 				setCurrentTileIndex(0);
 			}
 			return true;
 		case TouchEvent.ACTION_UP:
-			Log.d(TAG, "ACTION_UP");
+			//Log.d(TAG, "ACTION_UP");
 			setCurrentTileIndex(0);
 			if (mIsPressed) {
 				mIsPressed = false;
