@@ -7,6 +7,7 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.ph.game.gamestate.GameStateManager;
+import org.ph.game.gamestate.MenuGameState;
 
 public class MainActivity extends SimpleBaseGameActivity {
 
@@ -27,12 +28,15 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	protected void onCreateResources() {
 		mContext = new GameContext(this);
-		mGameStateManager = new GameStateManager(mContext);
+		//mGameStateManager = new GameStateManager(mContext);
+		mGameStateManager = mContext.getGameStateManager();
+		mGameStateManager.addGameState(new MenuGameState(mContext));
 	}
 
 	@Override
 	protected Scene onCreateScene() {
-		return mGameStateManager.getCurrentScene();
+		//return mGameStateManager.getCurrentScene();
+		return mContext.getGameStateManager().getCurrentScene();
 	}
 
 	@Override

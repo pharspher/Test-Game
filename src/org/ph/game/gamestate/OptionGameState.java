@@ -1,7 +1,6 @@
 package org.ph.game.gamestate;
 
 import org.andengine.engine.Engine;
-import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.opengl.font.BitmapFont;
@@ -17,11 +16,7 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.ph.game.testgame.GameContext;
 import org.ph.game.widget.AnimatedSpriteButton;
 
-import android.util.Log;
-
-public class MenuGameState extends BaseGameState {
-
-	private static final String TAG = "MenuGameState";
+public class OptionGameState extends BaseGameState {
 	private static final String BITMAP_FONT_PATH = "font/BitmapFont.fnt";
 
 	private Scene mScene;
@@ -33,25 +28,14 @@ public class MenuGameState extends BaseGameState {
 	private GameContext mGameContext;
 	private Engine mEngine;
 
-	private static final String[] mMenuItemList = new String[] {
-		"New Game", "Resume Game", "Options", "Quit"
-	};
-
-	private MenuItemClickListener[] mMenuItemClickListener;
-
-	private interface MenuItemClickListener {
-		public void onClick();
-	};
-
-	public MenuGameState(GameContext context) {
+	public OptionGameState(GameContext context) {
 		super(context);
-		Log.d(TAG, "MenuGameState()");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreateResources() {
-		Log.d(TAG, "onCreateResource()");
-
+		// TODO Auto-generated method stub
 		mGameContext = getGameContext();
 		mEngine = mGameContext.getEngine();
 		TextureManager textureManager = mEngine.getTextureManager();
@@ -79,70 +63,28 @@ public class MenuGameState extends BaseGameState {
 		new BitmapFont(mGameContext.getEngine().getTextureManager(),
 				mGameContext.getAssets(), BITMAP_FONT_PATH);
 		mBitmapFont.load();
-
-		initMenuItemClickListeners();
-	}
-
-	private void initMenuItemClickListeners() {
-		mMenuItemClickListener = new MenuItemClickListener[mMenuItemList.length];
-		mMenuItemClickListener[0] = new MenuItemClickListener() {
-			@Override
-			public void onClick() {
-				mGameContext.getGameStateManager().addGameState(new OptionGameState(mGameContext));
-			}
-		};
-		mMenuItemClickListener[1] = new MenuItemClickListener() {
-			@Override
-			public void onClick() {
-				
-			}
-		};
-		mMenuItemClickListener[2] = new MenuItemClickListener() {
-			@Override
-			public void onClick() {
-				
-			}
-		};
-		mMenuItemClickListener[3] = new MenuItemClickListener() {
-			@Override
-			public void onClick() {
-				mGameContext.getGameActivity().finish();
-			}
-		};
 	}
 
 	@Override
 	public Scene onCreateScene() {
-		Log.d(TAG, "onCreateScene()");
-
+		// TODO Auto-generated method stub
 		mScene = new Scene();
-		mScene.setBackground(new Background(1.0f, 1.0f, 1.0f));
-		mScene.setTouchAreaBindingOnActionDownEnabled(true);
+		mScene.setBackground(new Background(1.0f, 0.0f, 0.0f));
 
-		final Engine engine = mGameContext.getEngine();
-		final Camera camera = engine.getCamera();
-		int yInterval = 
-				(int)(camera.getHeight() / (mMenuItemList.length + 1));
+		AnimatedSpriteButton button = new AnimatedSpriteButton(0, 0, 
+				mTiledButtonRegion, 
+				mEngine.getVertexBufferObjectManager()) {
 
-		for (int i = 0; i < mMenuItemList.length; i++) {
-			final int ci = i;
-
-			AnimatedSpriteButton button = new AnimatedSpriteButton(0, 0, 
-					mTiledButtonRegion, 
-					mEngine.getVertexBufferObjectManager()) {
-
-				@Override
-				public void onClick() {
-					mMenuItemClickListener[ci].onClick();
-				}
-			};
-			button.setText(mMenuItemList[ci], mBitmapFont);
-			button.setPosition(0, 
-					(ci + 1) * yInterval - button.getHeight() / 2);
-			mScene.registerTouchArea(button);
-			mScene.attachChild(button);
-		}
+			@Override
+			public void onClick() {
+				mGameContext.getGameStateManager().removeCurrentState();
+			}
+		};
+		button.setText("Back", mBitmapFont);
+		mScene.registerTouchArea(button);
+		mScene.attachChild(button);
 
 		return mScene;
 	}
+
 }
