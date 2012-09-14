@@ -28,15 +28,13 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	protected void onCreateResources() {
 		mContext = new GameContext(this);
-		//mGameStateManager = new GameStateManager(mContext);
 		mGameStateManager = mContext.getGameStateManager();
-		mGameStateManager.addGameState(new MenuGameState(mContext));
 	}
 
 	@Override
 	protected Scene onCreateScene() {
-		//return mGameStateManager.getCurrentScene();
-		return mContext.getGameStateManager().getCurrentScene();
+		mGameStateManager.pushState(new MenuGameState(mContext));
+		return mGameStateManager.createCurrentScene();
 	}
 
 	@Override

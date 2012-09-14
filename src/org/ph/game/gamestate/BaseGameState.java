@@ -15,15 +15,26 @@ public abstract class BaseGameState {
 
 	protected GameContext mContext;
 
+	public abstract void onCreateResources();
+	public abstract Scene onCreateScene();
+
 	public BaseGameState(GameContext context) {
 		Log.d(TAG, "BaseGameState()");
-
 		mContext = context;
 		mEngine = mContext.getEngine();
+	}
 
+	public void init() {
 		onCreateResources();
+	}
 
-		mScene = onCreateScene();
+	public void cleanup() {
+	}
+
+	public void pause() {
+	}
+
+	public void resume() {
 	}
 
 	public Scene getScene() {
@@ -38,6 +49,8 @@ public abstract class BaseGameState {
 		return mContext;
 	}
 
-	public abstract void onCreateResources();
-	public abstract Scene onCreateScene();
+	public Scene createScene() {
+		mScene = onCreateScene();
+		return mScene;
+	}
 }

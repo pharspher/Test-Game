@@ -30,12 +30,10 @@ public class OptionGameState extends BaseGameState {
 
 	public OptionGameState(GameContext context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreateResources() {
-		// TODO Auto-generated method stub
 		mGameContext = getGameContext();
 		mEngine = mGameContext.getEngine();
 		TextureManager textureManager = mEngine.getTextureManager();
@@ -67,9 +65,9 @@ public class OptionGameState extends BaseGameState {
 
 	@Override
 	public Scene onCreateScene() {
-		// TODO Auto-generated method stub
 		mScene = new Scene();
 		mScene.setBackground(new Background(1.0f, 0.0f, 0.0f));
+		mScene.setTouchAreaBindingOnActionDownEnabled(true);
 
 		AnimatedSpriteButton button = new AnimatedSpriteButton(0, 0, 
 				mTiledButtonRegion, 
@@ -77,7 +75,7 @@ public class OptionGameState extends BaseGameState {
 
 			@Override
 			public void onClick() {
-				mGameContext.getGameStateManager().removeCurrentState();
+				mGameContext.getGameStateManager().popState();
 			}
 		};
 		button.setText("Back", mBitmapFont);

@@ -23,11 +23,6 @@ public class GameStateManager {
 	public GameStateManager(GameContext context) {
 		mStates = new ArrayList<BaseGameState>();
 		mGameContext = context;
-		/*
-		mStates.add(new MenuGameState(context));
-
-		mCurrentScene = mStates.get(0).getScene();
-		*/
 	}
 
 	public BaseGameState getCurrentState() {
@@ -44,16 +39,23 @@ public class GameStateManager {
 	 * When changing to scene that have already been created before, the game
 	 * state will have multiple instances in the mStates.
 	 */
-	public void addGameState(BaseGameState state) {
+	public void pushState(BaseGameState state) {
+		state.init();
 		mStates.add(state);
+	}
+
+	public void popState() {
+		mStates.remove(mStates.size() - 1);
 		mCurrentScene = mStates.get(mStates.size() - 1).getScene();
 		mGameContext.getEngine().setScene(mCurrentScene);
 	}
 
-	public void removeCurrentState() {
-		// TODO Auto-generated method stub
-		mStates.remove(mStates.size() - 1);
-		mCurrentScene = mStates.get(mStates.size() - 1).getScene();
+	public Scene createCurrentScene() {
+		return mStates.get(mStates.size() - 1).createScene();
+	}
+
+	public void startNewState() {
+		mCurrentScene = mStates.get(mStates.size() - 1).createScene();
 		mGameContext.getEngine().setScene(mCurrentScene);
 	}
 }

@@ -88,7 +88,9 @@ public class MenuGameState extends BaseGameState {
 		mMenuItemClickListener[0] = new MenuItemClickListener() {
 			@Override
 			public void onClick() {
-				mGameContext.getGameStateManager().addGameState(new OptionGameState(mGameContext));
+				GameStateManager mgr = mGameContext.getGameStateManager();
+				mgr.pushState(new OptionGameState(mGameContext));
+				mgr.startNewState();
 			}
 		};
 		mMenuItemClickListener[1] = new MenuItemClickListener() {
