@@ -33,8 +33,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 	@Override
 	protected Scene onCreateScene() {
-		mGameStateManager.pushState(new MenuGameState(mContext));
-		return mGameStateManager.createCurrentScene();
+		return mGameStateManager.createInitScene(new MenuGameState(mContext));
 	}
 
 	@Override

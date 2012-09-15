@@ -40,13 +40,14 @@ public class GameStateManager {
 	 * state will have multiple instances in the mStates.
 	 */
 	public void pushState(BaseGameState state) {
-		state.init();
 		mStates.add(state);
 	}
 
 	public void popState() {
+		getCurrentState().pause();
 		mStates.remove(mStates.size() - 1);
-		mCurrentScene = mStates.get(mStates.size() - 1).getScene();
+		getCurrentState().resume();
+		mCurrentScene = getCurrentState().getScene();
 		mGameContext.getEngine().setScene(mCurrentScene);
 	}
 
@@ -57,5 +58,20 @@ public class GameStateManager {
 	public void startNewState() {
 		mCurrentScene = mStates.get(mStates.size() - 1).createScene();
 		mGameContext.getEngine().setScene(mCurrentScene);
+	}
+
+	public void changeState(BaseGameState newState) {
+		getCurrentState().pause();
+		newState.resume();
+		mCurrentScene = newState.getScene();
+		mGameContext.getEngine().setScene(mCurrentScene);
+		pushState(newState);
+	}
+
+	public Scene createInitScene(BaseGameState state) {
+		state.resume();
+		mCurrentScene = state.getScene();
+		pushState(state);
+		return mCurrentScene;
 	}
 }

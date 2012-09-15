@@ -33,6 +33,8 @@ public class MenuGameState extends BaseGameState {
 	private GameContext mGameContext;
 	private Engine mEngine;
 
+	private BaseGameState mOptionState;
+
 	private static final String[] mMenuItemList = new String[] {
 		"New Game", "Resume Game", "Options", "Quit"
 	};
@@ -88,21 +90,21 @@ public class MenuGameState extends BaseGameState {
 		mMenuItemClickListener[0] = new MenuItemClickListener() {
 			@Override
 			public void onClick() {
-				GameStateManager mgr = mGameContext.getGameStateManager();
-				mgr.pushState(new OptionGameState(mGameContext));
-				mgr.startNewState();
 			}
 		};
 		mMenuItemClickListener[1] = new MenuItemClickListener() {
 			@Override
 			public void onClick() {
-				
 			}
 		};
 		mMenuItemClickListener[2] = new MenuItemClickListener() {
 			@Override
 			public void onClick() {
-				
+				GameStateManager mgr = mGameContext.getGameStateManager();
+				if (mOptionState == null) {
+					mOptionState = new OptionGameState(mGameContext);
+				}
+				mgr.changeState(mOptionState);
 			}
 		};
 		mMenuItemClickListener[3] = new MenuItemClickListener() {
@@ -146,5 +148,9 @@ public class MenuGameState extends BaseGameState {
 		}
 
 		return mScene;
+	}
+
+	@Override
+	public void onResume() {
 	}
 }

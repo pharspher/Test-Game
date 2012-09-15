@@ -85,4 +85,12 @@ public class OptionGameState extends BaseGameState {
 		return mScene;
 	}
 
+	@Override
+	public void onResume() {
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }
