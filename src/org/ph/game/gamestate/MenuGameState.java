@@ -33,6 +33,7 @@ public class MenuGameState extends BaseGameState {
 	private GameContext mGameContext;
 	private Engine mEngine;
 
+	private BaseGameState mGameState;
 	private BaseGameState mOptionState;
 
 	private static final String[] mMenuItemList = new String[] {
@@ -90,6 +91,11 @@ public class MenuGameState extends BaseGameState {
 		mMenuItemClickListener[0] = new MenuItemClickListener() {
 			@Override
 			public void onClick() {
+				GameStateManager mgr = mGameContext.getGameStateManager();
+				if (mGameState == null) {
+					mGameState = new ShootGameState(mGameContext);
+				}
+				mgr.changeState(mGameState);
 			}
 		};
 		mMenuItemClickListener[1] = new MenuItemClickListener() {
@@ -124,6 +130,7 @@ public class MenuGameState extends BaseGameState {
 		mScene.setTouchAreaBindingOnActionDownEnabled(true);
 
 		final Engine engine = mGameContext.getEngine();
+
 		final Camera camera = engine.getCamera();
 		int yInterval = 
 				(int)(camera.getHeight() / (mMenuItemList.length + 1));
