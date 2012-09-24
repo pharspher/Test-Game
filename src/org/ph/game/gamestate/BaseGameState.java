@@ -5,6 +5,7 @@ import org.andengine.entity.scene.Scene;
 import org.ph.game.testgame.GameContext;
 
 import android.util.Log;
+import android.view.KeyEvent;
 
 public abstract class BaseGameState {
 
@@ -18,6 +19,8 @@ public abstract class BaseGameState {
 	public abstract void onCreateResources();
 	public abstract Scene onCreateScene();
 	public abstract void onResume();
+	public abstract void onPause();
+	public abstract void onDestroy();
 
 	private boolean mIsInit = false;
 
@@ -27,17 +30,23 @@ public abstract class BaseGameState {
 		mEngine = mContext.getEngine();
 	}
 
-	public void init() {
+	private void init() {
 		Log.d(TAG, this + ".init()");
 		onCreateResources();
 		mIsInit = true;
 	}
 
-	public void cleanup() {
-	}
+	//private void cleanup() {
+	//}
 
 	public void pause() {
 		Log.d(TAG, this + ".pause()");
+		onPause();
+	}
+
+	public void destroy() {
+		Log.d(TAG, this + ".destroy()");
+		onDestroy();
 	}
 
 	public void resume() {
@@ -47,6 +56,12 @@ public abstract class BaseGameState {
 		Log.d(TAG, this + ".resume()");
 		onResume();
 	}
+
+	//private void onResume() {
+	//}
+
+	//private void onPause() {
+	//}
 
 	public Scene getScene() {
 		Scene scene = mScene;
@@ -74,5 +89,9 @@ public abstract class BaseGameState {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		return false;
 	}
 }

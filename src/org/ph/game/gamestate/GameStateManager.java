@@ -6,6 +6,7 @@ import org.andengine.entity.scene.Scene;
 import org.ph.game.testgame.GameContext;
 
 import android.util.Log;
+import android.view.KeyEvent;
 
 public class GameStateManager {
 	private static final String TAG = "GameStateManager";
@@ -45,6 +46,7 @@ public class GameStateManager {
 
 	public void popState() {
 		getCurrentState().pause();
+		getCurrentState().destroy();
 		mStates.remove(mStates.size() - 1);
 		getCurrentState().resume();
 		mCurrentScene = getCurrentState().getScene();
@@ -73,5 +75,9 @@ public class GameStateManager {
 		mCurrentScene = state.getScene();
 		pushState(state);
 		return mCurrentScene;
+	}
+
+	public boolean dispatchKeyEvent(int keyCode, KeyEvent event) {
+		return getCurrentState().onKeyDown(keyCode, event);
 	}
 }

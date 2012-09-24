@@ -160,4 +160,12 @@ public class MenuGameState extends BaseGameState {
 	@Override
 	public void onResume() {
 	}
+
+	@Override
+	public void onPause() {
+	}
+
+	@Override
+	public void onDestroy() {
+	}
 }
