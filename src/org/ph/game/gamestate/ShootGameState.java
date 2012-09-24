@@ -227,11 +227,6 @@ public class ShootGameState extends BaseGameState {
 	public void onDestroy() {
 	}
 
-	private void releaseResources() {
-		mBitmapTextureAtlas.unload();
-		mBitmapTextureAtlas.clearTextureAtlasSources();
-	}
-
 	private void freeze() {
 		for (Enemy s : mEnemies) {
 			s.mSprite.unregisterEntityModifier(s.mXModifier);

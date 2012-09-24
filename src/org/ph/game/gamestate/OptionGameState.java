@@ -4,7 +4,6 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.BitmapFont;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
@@ -14,7 +13,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.ph.game.testgame.GameContext;
 import org.ph.game.widget.AnimatedSpriteButton;
@@ -28,14 +26,6 @@ public class OptionGameState extends BaseGameState {
 
 	private BuildableBitmapTextureAtlas mBitmapTextureAtlas;
 	private TiledTextureRegion mTiledButtonRegion;
-
-	private BitmapTextureAtlas mAtlas;
-	private ITextureRegion mBgRegion;
-	private ITextureRegion mBgRegion2;
-	private Sprite mSprite;
-	private Sprite mSprite2;
-
-	
 
 	private GameContext mGameContext;
 	private Engine mEngine;
@@ -84,20 +74,6 @@ public class OptionGameState extends BaseGameState {
 			mBackgroundScroller.addBackground("background/scroll_bg0" + (i + 1) + ".png");
 		}
 		mBackgroundScroller.load();
-
-		//mAtlas = new BitmapTextureAtlas(textureManager, 1280,
-		//		1440, TextureOptions.BILINEAR);
-		//mAtlas = mBackgroundScroller.getTextureAtlas();
-		//mBgRegion = BitmapTextureAtlasTextureRegionFactory
-		//		.createFromAsset(mAtlas, 
-		//				mContext.getGameActivity(), "background/scroll_bg01.png", 
-		//				0, 0);
-		//mBgRegion2 = BitmapTextureAtlasTextureRegionFactory
-		//		.createFromAsset(mAtlas, 
-		//				mContext.getGameActivity(), "background/scroll_bg02.png", 
-		//				0, 720);
-		//mAtlas.load();
-		//p.mSprite = new Sprite(0, 0, mPageWi
 	}
 
 	@Override
@@ -120,12 +96,6 @@ public class OptionGameState extends BaseGameState {
 		mScene.attachChild(button);
 
 		mBackgroundScroller.apply(mScene);
-		
-		//mSprite = new Sprite(0, 0, mBgRegion,
-		//		mEngine.getVertexBufferObjectManager());
-		//mSprite2 = new Sprite(0, 0, mBgRegion2,
-		//		mEngine.getVertexBufferObjectManager());
-		//mScene.attachChild(mSprite2);
 
 		return mScene;
 	}
