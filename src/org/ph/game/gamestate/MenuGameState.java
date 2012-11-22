@@ -1,10 +1,16 @@
 package org.ph.game.gamestate;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.BitmapFont;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -13,9 +19,14 @@ import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.bitmap.BitmapTexture;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
+import org.andengine.util.adt.io.in.IInputStreamOpener;
 import org.ph.game.testgame.GameContext;
 import org.ph.game.widget.AnimatedSpriteButton;
+import org.ph.game.widget.ScrollingBackground;
 
 import android.util.Log;
 
@@ -35,6 +46,17 @@ public class MenuGameState extends BaseGameState {
 
 	private BaseGameState mGameState;
 	private BaseGameState mOptionState;
+
+	private class BackgroundData {
+		public ITexture mTexture;
+		public ITextureRegion mRegion;
+		public Sprite mSprite;
+	}
+
+	private ArrayList<BackgroundData> mBackgrounds =
+			new ArrayList<BackgroundData>();
+	private ScrollingBackground mScrollingBackground = 
+			new ScrollingBackground();
 
 	private static final String[] mMenuItemList = new String[] {
 		"New Game", "Resume Game", "Options", "Quit"
@@ -84,6 +106,31 @@ public class MenuGameState extends BaseGameState {
 		mBitmapFont.load();
 
 		initMenuItemClickListeners();
+
+		for (int i = 0; i < 5; i++) {
+			BackgroundData bgData = new BackgroundData();
+			final int ci = i;
+			try {
+				bgData.mTexture = new BitmapTexture(textureManager, 
+						new IInputStreamOpener() {
+					@Override
+					public InputStream open() throws IOException {
+						return mContext.getAssets()
+								.open("sprite/background/scroll_bg0" + ci + ".png");
+					}
+				});
+				bgData.mTexture.load();
+				bgData.mRegion = TextureRegionFactory
+						.extractFromTexture(bgData.mTexture);
+				bgData.mSprite = new Sprite(0, 0 , bgData.mRegion, 
+						mEngine.getVertexBufferObjectManager());
+				mScrollingBackground.addBackgroundPage(
+						new ScrollingBackground.BackgroundPage(bgData.mSprite));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			mBackgrounds.add(bgData);
+		}
 	}
 
 	private void initMenuItemClickListeners() {
@@ -153,6 +200,7 @@ public class MenuGameState extends BaseGameState {
 			mScene.registerTouchArea(button);
 			mScene.attachChild(button);
 		}
+		mScene.setBackground(mScrollingBackground);
 
 		return mScene;
 	}
