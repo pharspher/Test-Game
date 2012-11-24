@@ -140,7 +140,7 @@ public class MenuGameState extends BaseGameState {
 			public void onClick() {
 				GameStateManager mgr = mGameContext.getGameStateManager();
 				if (mGameState == null) {
-					mGameState = new ShootGameState(mGameContext);
+					mGameState = new RunGameState(mGameContext);
 				}
 				mgr.changeState(mGameState);
 			}
