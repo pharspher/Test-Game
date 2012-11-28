@@ -24,7 +24,7 @@ public class ScrollingBackground extends Background {
 			new ArrayList<BackgroundPage>();
 
 	private int mCurrentIndex = -1;
-	private static int mTotalWidth;
+	//private static int mTotalWidth;
 	private int mOffset;
 
 	@Override
@@ -37,7 +37,7 @@ public class ScrollingBackground extends Background {
 
 	public void addBackgroundPage(final BackgroundPage page) {
 		mCurrentIndex = 0;
-		mTotalWidth += page.mAreaShape.getWidth();
+		//mTotalWidth += page.mAreaShape.getWidth();
 		this.mBackgroundPages.add(page);;
 	}
 
@@ -50,9 +50,9 @@ public class ScrollingBackground extends Background {
 		public void onDraw(final GLState pGLState, final Camera pCamera, float offset) {
 			pGLState.pushModelViewGLMatrix();
 			{
-				final float cameraWidth = pCamera.getWidth();
-				final float shapeWidthScaled = this.mAreaShape.getWidthScaled();
-				float baseOffset = 0 % mTotalWidth;
+				//final float cameraWidth = pCamera.getWidth();
+				//final float shapeWidthScaled = this.mAreaShape.getWidthScaled();
+				//float baseOffset = 0 % mTotalWidth;
 
 				//while(baseOffset > 0) {
 				//	baseOffset -= shapeWidthScaled;
